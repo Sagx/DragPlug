@@ -588,7 +588,7 @@ var Designer = {
 						Designer.selectAll();
 						j.preventDefault()
 					} else {
-						if (j.keyCode == 46 || j.keyCode == 8) {
+						if (j.keyCode == 46) {
 							Designer.op.removeShape();
 							j.preventDefault()
 						} else {
@@ -650,7 +650,8 @@ var Designer = {
 																		}
 																		Utils.hideLinkerCursor();
 																		UI.hideShapeOptions();
-																		if (j.keyCode == 37) {
+																		//fudong 注销页面元素方向键移动事件
+																		/*if (j.keyCode == 37) {
 																			Designer.op.moveShape(a, {
 																				x: -b,
 																				y: 0
@@ -676,7 +677,7 @@ var Designer = {
 																					}
 																				}
 																			}
-																		}
+																		}*/
 																		$(document).unbind("keyup.moveshape").bind("keyup.moveshape", function() {
 																			Model.updateMulti(a);
 																			a = null;
@@ -2437,7 +2438,7 @@ var Designer = {
                                                 bodyDown.append("<p><b>没有参数！</b></p>");
 											}else {
                                                 for(var bb=0;bb<param.length;bb++){
-                                                    bodyDown.append("<div class='form-group'><label for='inputEmail3' class='col-sm-4 control-label'>"+param[bb][1]+":</label><div class='col-sm-8'><input name='"+param[bb][0]+"' class='form-control'></div></div>");
+                                                    bodyDown.append("<div class='form-group'><label for='inputEmail3' class='col-sm-4 control-label'>"+param[bb][1]+":</label><div class='col-sm-8'><input name='"+param[bb][0]+"' value='"+param[bb][2]+"' class='form-control'></div></div>");
                                                 }
 											}
                                         },

@@ -2642,6 +2642,7 @@ var Designer = {
 
 			function e(j, i) {
 				var g = Utils.newId();
+				//默认箭头形状修改位置
 				var h = Utils.copy(Schema.linkerDefaults);
 				h.from = j;
 				h.to = {

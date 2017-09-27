@@ -79,7 +79,7 @@ var Designer = {
 				});
 				var o = e[0].getContext("2d");
 				o.clearRect(0, 0, l, f);
-				var k = Model.define.page.padding.toScale();
+				var k = 0;
 				var c = l - k * 2;
 				var m = f - k * 2;
 				o.fillStyle = "rgb(" + a + ")";
@@ -134,8 +134,8 @@ var Designer = {
 				padding: 0
 			});
 			if (!this.initialized) {
-				$("#designer_layout").scrollTop(500);
-				$("#designer_layout").scrollLeft(20)
+				$("#designer_layout").scrollTop(0);
+				$("#designer_layout").scrollLeft(0)
 			}
 		},
 		initShapes: function() {
@@ -2486,6 +2486,7 @@ var Designer = {
 
 			function loadParam() {
                 var params = a.textBlock[0].params;
+                var labels = a.textBlock[0].labels;
                 var bodyDown2 = $('#bodyDown');
                 bodyDown2.empty();
                 if(params.length == 0){
@@ -2494,7 +2495,7 @@ var Designer = {
                     for(var rr=0;rr<params.length;rr++){
                         var key = params[rr].split("\":\"")[0].substring(1,params[rr].split("\":\"")[0].length);
                         var vv = params[rr].split("\":\"")[1].substring(0,params[rr].split("\":\"")[1].length-1);
-                        bodyDown2.append("<div class='form-group'><label for='inputEmail3' class='col-sm-4 control-label'>"+key+":</label><div class='col-sm-8'><input name='"+key+"' value='"+vv+"' class='form-control'></div></div>");
+                        bodyDown2.append("<div class='form-group'><label class='col-sm-4 control-label'>"+labels[rr]+":</label><div class='col-sm-8'><input name='"+key+"' value='"+vv+"' class='form-control'></div></div>");
                     }
                 }
             }
@@ -2503,8 +2504,25 @@ var Designer = {
 				var i = $("#shape_text_edit").val().split("\n");
 				if ($("#shape_text_edit").length && $("#shape_text_edit").is(":visible")) {
                     $("#shape_text_edit").remove();
+
+                    //检查是否有重名
+					var flag = false;
+                    for (var ii=Model.orderList.length-1;ii>=0;ii--) {
+                        var order = Model.orderList[ii];
+                        var elementText = Model.define.elements[order.id].textBlock[0].text;
+                        if (elementText.indexOf(i[0]) >= 0){
+                        	if(elementText === i[0]){
+                                i[0] = elementText + '2';
+
+							}else{
+                                i[0] = i[0] + (parseInt(elementText.substring(i[0].length,elementText.length))+1);
+							}
+						}
+                    }
 					s.text = i[0];
                     i.splice(0,1);
+                    s.labels = i.slice(0,i.length/2);
+                    i.splice(0,i.length/2);
 					s.params = i;
 					Model.update(a);
 					Designer.painter.renderShape(a);

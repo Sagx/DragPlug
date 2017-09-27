@@ -8,12 +8,14 @@
 	position: relative;
 }
 #shape_panel{
-	width:162px;
+	z-index: 1;
+	width:80px;
+	height: 83px !important;
 	overflow: hidden;
 	overflow-y: auto;
 	position: absolute;
 	background: #F6F6F6;
-	border-right: 1px solid #A2A2A2;
+	border: 1px solid #A2A2A2;
 }
 .search_container{
 	background-color: #F3F3F3;
@@ -142,7 +144,7 @@
 }
 #designer_viewport{
 	position: relative;
-	margin-left: 163px;
+	margin-left: 0px;
 }
 #demo_signup{
 	background: #b2b2b2;
@@ -163,7 +165,13 @@
 	width: 80px;
 	font-size: 16px;
 }
+#downPage{
+	height: 200px;
+	width: 100%;
+	margin-top: 10px;
+}
 #designer_layout{
+	height: 400px !important;
 	overflow: scroll;
 	position: relative;
 	background: url(../images/canvas_bg.jpg) repeat;
@@ -456,7 +464,7 @@
 /**图形画板*/
 .shape_dashboard{
 	padding: 4px;
-	width: 136px;
+	width: 45px;
 	cursor: default;
 }
 .dashboard_box{

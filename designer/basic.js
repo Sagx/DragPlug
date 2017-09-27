@@ -8,8 +8,8 @@ Schema.addShape({
 	title: "Source",
 	category: "basic",
 	props: {
-		w: 70,
-		h: 70
+		w: 80,
+		h: 80
 	},
 	path: [{
 		actions: {
@@ -22,8 +22,8 @@ Schema.addShape({
 	title: "Interceptor",
 	category: "basic",
 	props: {
-		w: 100,
-		h: 70
+		w: 80,
+		h: 60
 	},
 	path: [{
 		actions: {
@@ -31,6 +31,7 @@ Schema.addShape({
 		}
 	}]
 });
+/*
 Schema.addShape({
 	name: "triangle",
 	title: "Sink",
@@ -77,4 +78,4 @@ Schema.addShape({
 			action: "close"
 		}]
 	}]
-});
+});*/

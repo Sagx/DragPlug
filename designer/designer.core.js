@@ -131,11 +131,11 @@ var Designer = {
 			$("#canvas_container").css({
 				width: l,
 				height: f,
-				padding: Designer.config.pageMargin
+				padding: 0
 			});
 			if (!this.initialized) {
-				$("#designer_layout").scrollTop(Designer.config.pageMargin - 10);
-				$("#designer_layout").scrollLeft(Designer.config.pageMargin - 10)
+				$("#designer_layout").scrollTop(500);
+				$("#designer_layout").scrollLeft(20)
 			}
 		},
 		initShapes: function() {
@@ -146,11 +146,11 @@ var Designer = {
 				}
 				$("#shape_panel").append("<div class='panel_container'><h3 class='panel_title'><div class='ico ico_accordion'></div>" + g.text + "</h3><div id='panel_" + g.name + "' class='content'></div></div>")
 			}
-			$(".panel_title").unbind().bind("click", function() {
+			/*$(".panel_title").unbind().bind("click", function() {
 				if (!$(this).hasClass("search")) {
 					$(this).parent().toggleClass("panel_collapsed")
 				}
-			});
+			});*/
 			for (var b in Schema.shapes) {
 				var j = Schema.shapes[b];
 				if (j.attribute.visible && j.category != "standard") {
@@ -165,6 +165,7 @@ var Designer = {
 				}
 			}
 			function e(l, o) {
+				//sag
 				l = Utils.copy(l);
 				var n = "<div class='panel_box' shapeName='" + l.name + "'><canvas class='panel_item' width='" + (Designer.config.panelItemWidth) + "' height='" + (Designer.config.panelItemHeight) + "'></canvas></div>";
 				var i = $(n).appendTo("#panel_" + l.category);
@@ -2403,6 +2404,7 @@ var Designer = {
                         type : "get",
                         url : url,
                         success : function (data) {
+                            $("#modelSubmit").attr("disabled", false);
                         	var bodyUp = $('#bodyUp');
                             bodyUp.empty();
                             var bodyDown = $('#bodyDown');
@@ -2432,11 +2434,15 @@ var Designer = {
                                         url : "http://localhost:4191/eTLTaskManager/findArgs",
 										data : {tool : this.value},
 										success : function (param) {
+                                            $("#modelSubmit").attr("disabled", false);
                                             var bodyDown = $('#bodyDown');
                                             bodyDown.empty();
                                         	if(param.length == 0){
                                                 bodyDown.append("<p><b>没有参数！</b></p>");
-											}else {
+											}else if(param.toString() === '请求失败！'){
+                                                bodyDown.append("<p><b>请求失败！</b></p>");
+                                                $("#modelSubmit").attr("disabled", true);
+                                            }else {
                                                 for(var bb=0;bb<param.length;bb++){
                                                     bodyDown.append("<div class='form-group'><label for='inputEmail3' class='col-sm-4 control-label'>"+param[bb][1]+":</label><div class='col-sm-8'><input name='"+param[bb][0]+"' value='"+param[bb][2]+"' class='form-control'></div></div>");
                                                 }
@@ -2452,7 +2458,8 @@ var Designer = {
                             //加载之前填的数据
                             if (a.textBlock[0].text){
                                 $("#bodyUp :input[value='"+a.textBlock[0].text+"']").attr("checked","checked").unbind("click").bind("click",function () {
-                                    loadParam()
+                                    $("#modelSubmit").attr("disabled", false);
+                                	loadParam()
                                 });
                                 loadParam()
                             }
@@ -3731,8 +3738,9 @@ var Designer = {
 						Designer.painter.drawPanelItem(m, l.name)
 					}
 					for (var i in Schema.shapes) {
+						//debugger;
 						var f = Schema.shapes[i];
-						if (f.category == a) {
+						if (f.category == a && i == 'rectangle') {
 							var b = f.attribute;
 							if (b.visible && b.linkable) {
 								if (!f.groupName) {

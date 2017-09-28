@@ -2506,20 +2506,23 @@ var Designer = {
                     $("#shape_text_edit").remove();
 
                     //检查是否有重名
-					var flag = false;
-                    for (var ii=Model.orderList.length-1;ii>=0;ii--) {
-                        var order = Model.orderList[ii];
-                        var elementText = Model.define.elements[order.id].textBlock[0].text;
-                        if (elementText.indexOf(i[0]) >= 0){
-                        	if(elementText === i[0]){
-                                i[0] = elementText + '2';
-
-							}else{
-                                i[0] = i[0] + (parseInt(elementText.substring(i[0].length,elementText.length))+1);
-							}
-						}
-                    }
-					s.text = i[0];
+					if(s.text === ''){
+                        for (var ii=Model.orderList.length-1;ii>=0;ii--) {
+                            var order = Model.orderList[ii];
+                            var currentEle = Model.define.elements[order.id];
+                            if(currentEle.name === 'rectangle'){
+                                var elementText = currentEle.textBlock[0].text;
+                                if (elementText.indexOf(i[0]) >= 0){
+                                    if(elementText === i[0]){
+                                        i[0] = i[0] + '2';
+                                    }else{
+                                        i[0] = i[0] + (parseInt(elementText.substring(i[0].length,elementText.length))+1);
+                                    }
+                                }
+                            }
+                        }
+                        s.text = i[0];
+					}
                     i.splice(0,1);
                     s.labels = i.slice(0,i.length/2);
                     i.splice(0,i.length/2);

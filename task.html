@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" style="overflow:scroll">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,242 +15,234 @@
 
     <script type="text/javascript" src="js/scripts.js"></script>
 
-      <script type="text/javascript" charset="UTF-8" src="designer/jquery-1.9.1.js"></script>
-<script type="text/javascript" charset="UTF-8" src="designer/schema.js"></script>
-<script type="text/javascript" charset="UTF-8" src="designer/basic.js"></script>
-<script type="text/javascript" charset="UTF-8" src="designer/collaboration.js"></script>
-<script type="text/javascript" charset="UTF-8" src="designer/designer.core.js"></script>
-<script type="text/javascript" charset="UTF-8" src="designer/designer.methods.js"></script>
-<script type="text/javascript" charset="UTF-8" src="designer/designer.events.js"></script>
-<script type="text/javascript" charset="UTF-8" src="designer/designer.ui.js"></script>
-<link type="text/css" rel="stylesheet" href="designer/designer.css">
-<link type="text/css" rel="stylesheet" href="designer/ui.css">
-      <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="designer/jquery-1.9.1.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="designer/schema.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="designer/basic.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="designer/collaboration.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="designer/designer.core.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="designer/designer.methods.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="designer/designer.events.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="designer/designer.ui.js"></script>
+    <link type="text/css" rel="stylesheet" href="designer/designer.css">
+    <link type="text/css" rel="stylesheet" href="designer/ui.css">
+    <script type="text/javascript" src="js/bootstrap.js"></script>
 
-  </head>
-  <body>
-    <div class="container-fluid">
-	<div class="row">
-		<div class="col-md-12">
-		<div id="designer">
-<div id="shape_panel" class="layout">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="designer">
+                <div id="shape_panel" class="layout">
 
-</div>
-<div id="designer_viewport">
-<div id="designer_layout" class="layout">
-<div id="canvas_container">
-<div id="designer_canvas">
-    <!--画布-->
-<canvas id="designer_grids"></canvas>
-</div>
-</div>
-</div>
-
-    <div id="downPage">
-        <div class="row">
-            <div class='col-sm-12'>
-                <textarea placeholder="输入trs文件全文本..." id="trsText" rows="11" style="width: 100%"></textarea>
-                <button class="btn btn-success" style="position: absolute;left: 88%;top: 80%" onclick="test()">测试</button>
-                <button class="btn btn-success" style="position: absolute;left: 93%;top: 80%" onclick="">提交</button>
-            </div>
-        </div>
-    </div>
-
-</div>
-</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-8">
-
-		</div>
-		<div class="col-md-4">
-
-		</div>
-	</div>
-</div>
-
-    <!--模态框-->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        节点属性
-                    </h4>
                 </div>
-                <div class="modal-body">
-
-                    <div class="input-group">
-                        <div id="bodyUp" class="form-group"></div>
+                <div id="designer_viewport">
+                    <div id="designer_layout" class="layout">
+                        <div id="canvas_container">
+                            <div id="designer_canvas">
+                                <!--画布-->
+                                <canvas id="designer_grids"></canvas>
+                            </div>
+                        </div>
                     </div>
-                    <div class="input-group">
 
-                        <form id="bodyDown" class="form-horizontal"></form>
-
+                    <div id="downPage">
+                        <div class="row">
+                            <div class='col-sm-12'>
+                                <textarea placeholder="输入测试文本..." rows="11" id="trsText" style="width: 100%;"></textarea>
+                                <button class="btn btn-success" style="position: absolute;left: 88%;top: 80%" onclick="test()">测试</button>
+                                <button class="btn btn-success" style="position: absolute;left: 93%;top: 80%" onclick="">提交</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        关闭
-                    </button>
-                    <button type="button" class="btn btn-primary" id="modelSubmit">
-                        确定
-                    </button>
+
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-  <script type="text/javascript">
+<!--模态框-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    节点属性
+                </h4>
+            </div>
+            <div class="modal-body">
 
-      $(function () {
-          $('#myModal').on('hidden.bs.modal', function () {
-              var mm = $("#shape_text_edit");
-              if (mm.val() === undefined || mm.val() === ''){
-                  mm.remove();
-              }
-          });
+                <div class="input-group">
+                    <div id="bodyUp" class="form-group"></div>
+                </div>
+                <div class="input-group">
 
-          $('#modelSubmit').click(function () {
-              var modelData = $('input[name="myRadio"]:checked').val();
+                    <form id="bodyDown" class="form-horizontal"></form>
 
-              $('#bodyDown .control-label').each(function () {
-                  modelData = modelData + '\n' + this.innerHTML.substring(0,this.innerHTML.length-1);
-              });
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    关闭
+                </button>
+                <button type="button" class="btn btn-primary" id="modelSubmit">
+                    确定
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
-              $('#bodyDown :input').each(function () {
-                  modelData = modelData + '\n' + "\"" + this.name + "\"" + ":" + "\"" + this.value + "\"";
-              });
-              $('#myModal').modal('hide');
-              $('#shape_text_edit').val(modelData);
-              $('#shape_text_edit').trigger("diyEvent");
-          });
-      });
+<script type="text/javascript">
 
-      /*var self = setInterval(function(){
+    $(function () {
+        $('#myModal').on('hidden.bs.modal', function () {
+            var mm = $("#shape_text_edit");
+            if (mm.val() === undefined || mm.val() === '') {
+                mm.remove();
+            }
+        });
 
-      },3000);*/
+        $('#modelSubmit').click(function () {
+            var modelData = $('input[name="myRadio"]:checked').val();
 
-      function test() {
-          var nodeJson = getJson();
-          var trsContent = $('#trsText').val();
-          $.ajax({
-              type : "get",
-              url : "http://localhost:4191/eTLTaskManager/testData",
-              data : {trsData : trsContent, trsJson : nodeJson},
-              success : function (data) {
-                  console.log(data);
-                  alert(data.toString());
-              }
-          });
-      }
+            $('#bodyDown .control-label').each(function () {
+                modelData = modelData + '\n' + this.innerHTML.substring(0, this.innerHTML.length - 1);
+            });
 
-      function getJson() {
-          //clearInterval(self);
-          //var definition = JSON.stringify(Model.define);
-          //var data = JSON.parse(definition);
-          var links = [];
-          var rects = [];
+            $('#bodyDown :input').each(function () {
+                modelData = modelData + '\n' + "\"" + this.name + "\"" + ":" + "\"" + this.value + "\"";
+            });
+            $('#myModal').modal('hide');
+            $('#shape_text_edit').val(modelData);
+            $('#shape_text_edit').trigger("diyEvent");
+        });
+    });
 
-          //整理元素，拿出需要的信息并分类到数组中
-          for (var i=0;i<Model.orderList.length;i++){
-              var order = Model.orderList[i];
-              var element = Model.define.elements[order.id];
+    /*var self = setInterval(function(){
 
-              if (element.name === 'round'){
-                  rects.push({
-                      type : 'round',
-                      id : element.id,
-                      text : element.textBlock[0].text,
-                      params : element.textBlock[0].params
-                  });
-              } else if(element.name === 'linker'){
-                  links.push({
-                      from : element.from.id,
-                      to : element.to.id
-                  })
-              } else if(element.name === 'rectangle'){
-                  rects.push({
-                      type : 'rectangle',
-                      id : element.id,
-                      text : element.textBlock[0].text,
-                      params : element.textBlock[0].params
-                  })
-              }
-          }
+    },3000);*/
 
-          //创建要存储子元素的数组
-          for (var x=0;x<rects.length;x++){
-              rects[x][rects[x].text] = [];
-          }
+    function test() {
+        var nodeJson = getJson();
+        var trsContent = $('#trsText').val();
+        $.ajax({
+            type: "get",
+            url: "http://localhost:4191/eTLTaskManager/testData",
+            data: {trsData: trsContent, trsJson: nodeJson},
+            success: function (data) {
+                console.log(data);
+                alert(data.toString());
+            }
+        });
+    }
 
-          //循环箭头，将子元素添加到父元素的数组中
-          for (var n=0;n<links.length;n++){
-              var formIndex = undefined,toIndex = undefined;
-              for(var m=0;m<rects.length;m++){
-                  if (links[n].from === rects[m].id){
-                      formIndex = m;
-                  }
-                  if (links[n].to === rects[m].id){
-                      toIndex = m;
-                  }
-                  if (formIndex !== undefined && toIndex !== undefined){
-                      rects[formIndex][rects[formIndex].text].push(rects[toIndex]);
-                      break;
-                  }
-              }
-          }
+    function getJson() {
+        //clearInterval(self);
+        //var definition = JSON.stringify(Model.define);
+        //var data = JSON.parse(definition);
+        var links = [];
+        var rects = [];
 
-          //拿到每个节点的数据并生成json
-          var nodeData = "{";
-          for (var vv=0;vv<rects.length;vv++){
-              var nodeParam = rects[vv].params;
-              nodeData = nodeData + "\"" + rects[vv].text + "\":{";
-              //循环节点参数
-              for (var zz=0;zz<nodeParam.length;zz++){
-                  nodeData = nodeData + nodeParam[zz] + ",";
-              }
-              //删除最后一个参数后的逗号
-              if (nodeData.charAt(nodeData.length-1) === ','){
-                  nodeData = nodeData.substring(0,nodeData.length-1);
-              }
-              nodeData = nodeData + "},";
-          }
-          if (nodeData.charAt(nodeData.length-1) === ','){
-              nodeData = nodeData.substring(0,nodeData.length-1);
-          }
-          nodeData = nodeData + "}";
+        //整理元素，拿出需要的信息并分类到数组中
+        for (var i = 0; i < Model.orderList.length; i++) {
+            var order = Model.orderList[i];
+            var element = Model.define.elements[order.id];
 
-          var roundIndex;
-          for (var q=0;q<rects.length;q++){
-              if (rects[q].type === 'round'){
-                   roundIndex = q;
-              }
-              delete rects[q].text;
-              delete rects[q].id;
-              delete rects[q].type;
-              delete rects[q].params;
-          }
+            if (element.name === 'round') {
+                rects.push({
+                    type: 'round',
+                    id: element.id,
+                    text: element.textBlock[0].text,
+                    params: element.textBlock[0].params
+                });
+            } else if (element.name === 'linker') {
+                links.push({
+                    from: element.from.id,
+                    to: element.to.id
+                })
+            } else if (element.name === 'rectangle') {
+                rects.push({
+                    type: 'rectangle',
+                    id: element.id,
+                    text: element.textBlock[0].text,
+                    params: element.textBlock[0].params
+                })
+            }
+        }
 
-          var nodeFrameJson = JSON.stringify(rects[roundIndex]);
-          var nodeFrame = nodeFrameJson.replace(/\[\]/g,"\"\"").replace(/\[/g,"").replace(/\]/g,"").replace(/},{/g,",");
+        //创建要存储子元素的数组
+        for (var x = 0; x < rects.length; x++) {
+            rects[x][rects[x].text] = [];
+        }
 
-          var nodeJson = "[" + nodeData + "," + nodeFrame + "]";
-          console.log(nodeJson);
-          return nodeJson;
-      }
-  </script>
+        //循环箭头，将子元素添加到父元素的数组中
+        for (var n = 0; n < links.length; n++) {
+            var formIndex = undefined, toIndex = undefined;
+            for (var m = 0; m < rects.length; m++) {
+                if (links[n].from === rects[m].id) {
+                    formIndex = m;
+                }
+                if (links[n].to === rects[m].id) {
+                    toIndex = m;
+                }
+                if (formIndex !== undefined && toIndex !== undefined) {
+                    rects[formIndex][rects[formIndex].text].push(rects[toIndex]);
+                    break;
+                }
+            }
+        }
 
-  </body>
+        //拿到每个节点的数据并生成json
+        var nodeData = "{";
+        for (var vv = 0; vv < rects.length; vv++) {
+            var nodeParam = rects[vv].params;
+            nodeData = nodeData + "\"" + rects[vv].text + "\":{";
+            //循环节点参数
+            for (var zz = 0; zz < nodeParam.length; zz++) {
+                nodeData = nodeData + nodeParam[zz] + ",";
+            }
+            //删除最后一个参数后的逗号
+            if (nodeData.charAt(nodeData.length - 1) === ',') {
+                nodeData = nodeData.substring(0, nodeData.length - 1);
+            }
+            nodeData = nodeData + "},";
+        }
+        if (nodeData.charAt(nodeData.length - 1) === ',') {
+            nodeData = nodeData.substring(0, nodeData.length - 1);
+        }
+        nodeData = nodeData + "}";
+
+        var roundIndex;
+        for (var q = 0; q < rects.length; q++) {
+            if (rects[q].type === 'round') {
+                roundIndex = q;
+            }
+            delete rects[q].text;
+            delete rects[q].id;
+            delete rects[q].type;
+            delete rects[q].params;
+        }
+
+        var nodeFrameJson = JSON.stringify(rects[roundIndex]);
+        var nodeFrame = nodeFrameJson.replace(/\[\]/g, "\"\"").replace(/\[/g, "").replace(/\]/g, "").replace(/},{/g, ",");
+
+        var nodeJson = "[" + nodeData + "," + nodeFrame + "]";
+        console.log(nodeJson);
+        return nodeJson;
+    }
+</script>
+
+</body>
 </html>
 
 <script type="text/javascript">
-//var definition = JSON.stringify(Model.define);
-//Designer.open(definition);
-//Model.orderList
-//Model.getShapeById("15e749854b671d") Source
+    //var definition = JSON.stringify(Model.define);
+    //Designer.open(definition);
+    //Model.orderList
+    //Model.getShapeById("15e749854b671d") Source
 </script>

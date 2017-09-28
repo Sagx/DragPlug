@@ -62,7 +62,7 @@
     </div>
 </div>
 
-<!--模态框-->
+<!--属性模态框-->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -97,9 +97,35 @@
     </div>
 </div>
 
+<!--结果模态框-->
+<div class="modal fade bs-example-modal-lg" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    处理结果
+                </h4>
+            </div>
+            <div class="modal-body">
+                <textarea id="resultText" rows="20" style="width: 100%;"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    关闭
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script type="text/javascript">
 
     $(function () {
+        //模态框隐藏
         $('#myModal').on('hidden.bs.modal', function () {
             var mm = $("#shape_text_edit");
             if (mm.val() === undefined || mm.val() === '') {
@@ -107,6 +133,7 @@
             }
         });
 
+        //提交模态框
         $('#modelSubmit').click(function () {
             var modelData = $('input[name="myRadio"]:checked').val();
 
@@ -127,20 +154,50 @@
 
     },3000);*/
 
+    //提交测试
     function test() {
         var nodeJson = getJson();
         var trsContent = $('#trsText').val();
         $.ajax({
-            type: "get",
+            type: "post",
             url: "http://localhost:4191/eTLTaskManager/testData",
             data: {trsData: trsContent, trsJson: nodeJson},
             success: function (data) {
                 console.log(data);
-                alert(data.toString());
+                $(document).bind('contextmenu',function(){
+                    return false;
+                });
+                for (var i = 0; i < Model.orderList.length; i++) {
+                    var order = Model.orderList[i];
+                    var element = Model.define.elements[order.id];
+                    if (element.name === 'rectangle') {
+                        $('#' + order.id).mousedown(function (event) {
+                            if(event.which === 3){
+                                var element = Model.define.elements[this.id];
+                                var resultArray = data[element.textBlock[0].text];
+                                var resultText = "";
+                                for (var jj=0;jj<resultArray.length;jj++){
+                                    resultText += "<REC>" + "\n";
+                                    for(var hh in resultArray[jj]){
+                                        resultText = resultText + "<" + hh + ">=" + resultArray[jj][hh] + "\n";
+                                    }
+                                    resultText += "\n";
+                                }
+                                $('#resultText').empty().val(resultText);
+                                $('#resultModal').modal('show');
+                            }
+                        });
+                    }
+                }
+                alert("测试数据处理完毕，请右击节点查看！");
+            },
+            error: function () {
+                alert("请求失败！");
             }
         });
     }
 
+    //生成json
     function getJson() {
         //clearInterval(self);
         //var definition = JSON.stringify(Model.define);

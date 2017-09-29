@@ -110,13 +110,13 @@
                 </h4>
             </div>
             <div class="modal-body">
-                <textarea id="resultText" rows="20" readonly="readonly" style="width: 100%;"></textarea>
+                <textarea id="resultText" rows="24" readonly="readonly" style="width: 100%;"></textarea>
             </div>
-            <div class="modal-footer">
+            <!--<div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">
                     关闭
                 </button>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>
@@ -183,7 +183,7 @@
                                     }
                                     resultText += "\n";
                                 }
-                                $('#resultText').empty().val(resultText);
+                                $('#resultText').empty().val(resultText.substring(0,resultText.length-2));
                                 $('#resultModal').modal('show');
                             }
                         });

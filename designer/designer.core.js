@@ -739,11 +739,11 @@ var Designer = {
 																								Designer.op.changeState("creating_free_text")
 																							} else {
 																								if (j.keyCode == 73 && !(j.ctrlKey || j.metaKey)) {
-																									$(".menu.list").hide();
+																									/*$(".menu.list").hide();
 																									UI.showImageSelect(function(o, e, p) {
 																										UI.insertImage(o, e, p)
 																									});
-																									$("#designer_contextmenu").hide()
+																									$("#designer_contextmenu").hide()*/
 																								} else {
 																									if (j.keyCode == 76 && !(j.ctrlKey || j.metaKey)) {
 																										$(".menu.list").hide();

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="overflow:scroll">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,7 +13,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
-    <script type="text/javascript" src="js/scripts.js"></script>
+    <script type="text/javascript" src="js/param.js"></script>
 
     <script type="text/javascript" charset="UTF-8" src="designer/jquery-1.9.1.js"></script>
     <script type="text/javascript" charset="UTF-8" src="designer/schema.js"></script>
@@ -29,9 +29,10 @@
 
 </head>
 <body>
+
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" style="padding: 0 2px">
             <div id="designer">
                 <div id="shape_panel" class="layout">
 
@@ -49,9 +50,9 @@
                     <div id="downPage">
                         <div class="row">
                             <div class='col-sm-12'>
-                                <textarea placeholder="输入测试文本..." rows="11" id="trsText" style="width: 100%;"></textarea>
-                                <button class="btn btn-success" style="position: absolute;left: 88%;top: 80%" onclick="test()">测试</button>
-                                <button class="btn btn-success" style="position: absolute;left: 93%;top: 80%" onclick="">提交</button>
+                                <textarea placeholder="输入测试文本..." id="trsText" style="width: 100%;height: 184px;resize: none;"></textarea>
+                                <button class="btn btn-success" style="position: absolute;left: 88%;top: 75%" onclick="test()">测试</button>
+                                <button class="btn btn-success" style="position: absolute;left: 93%;top: 75%" onclick="addParam()">提交</button>
                             </div>
                         </div>
                     </div>
@@ -97,7 +98,7 @@
     </div>
 </div>
 
-<!--结果模态框-->
+<!--处理结果模态框-->
 <div class="modal fade bs-example-modal-lg" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -112,15 +113,51 @@
             <div class="modal-body">
                 <textarea id="resultText" rows="24" readonly="readonly" style="width: 100%;"></textarea>
             </div>
-            <!--<div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">
-                    关闭
-                </button>
-            </div>-->
         </div>
     </div>
 </div>
 
+<!--提交模态框-->
+<div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    提交任务
+                </h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="taskName" class="col-sm-2 control-label">任务名称:</label>
+                        <div class="col-sm-10" style="padding-left: 0">
+                            <input class="form-control" id="taskName" placeholder="name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskRemark" class="col-sm-2 control-label">任务备注:</label>
+                        <div class="col-sm-10" style="padding-left: 0">
+                            <input class="form-control" id="taskRemark" placeholder="remark">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    关闭
+                </button>
+                <button type="button" class="btn btn-primary" onclick="submitData()">
+                    确定
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
 
@@ -146,6 +183,7 @@
             });
             $('#myModal').modal('hide');
             $('#shape_text_edit').val(modelData);
+            console.log(modelData);
             $('#shape_text_edit').trigger("diyEvent");
         });
     });
@@ -154,13 +192,37 @@
 
     },3000);*/
 
+    function addParam() {
+        $('#submitModal').modal('show');
+    }
+
+    //提交数据
+    function submitData() {
+        $('#submitModal').modal('hide');
+        var nodeJson = getJson();
+        var trsContent = $('#trsText').val();
+        var taskName = $('#taskName').val();
+        var taskRemark = $('#taskRemark').val();
+        $.ajax({
+            type: "post",
+            url: CONF.ipport + "/eTLTaskManager/submitData",
+            data: {trsData: trsContent, trsJson: nodeJson, taskName: taskName, taskRemark: taskRemark},
+            success: function (data) {
+                alert(data);
+            },
+            error: function () {
+                alert("请求失败！");
+            }
+        })
+    }
+
     //提交测试
     function test() {
         var nodeJson = getJson();
         var trsContent = $('#trsText').val();
         $.ajax({
             type: "post",
-            url: "http://localhost:4191/eTLTaskManager/testData",
+            url: CONF.ipport + "/eTLTaskManager/testData",
             data: {trsData: trsContent, trsJson: nodeJson},
             success: function (data) {
                 console.log(data);

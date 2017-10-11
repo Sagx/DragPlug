@@ -2395,9 +2395,9 @@ var Designer = {
 				if($(this).val() === ''){
                     var url;
                     if(a.name === 'round'){
-                        url = 'http://localhost:4191/eTLTaskManager/findSources';
+                        url = CONF.ipport + '/eTLTaskManager/findSources';
                     }else if(a.name === 'rectangle'){
-                        url = 'http://localhost:4191/eTLTaskManager/findInterceptions';
+                        url = CONF.ipport + '/eTLTaskManager/findInterceptions';
                     }
 
                     $.ajax({
@@ -2431,7 +2431,7 @@ var Designer = {
                                 $(this).click(function(){
                                 	$.ajax({
                                         type : "get",
-                                        url : "http://localhost:4191/eTLTaskManager/findArgs",
+                                        url : CONF.ipport + "/eTLTaskManager/findArgs",
 										data : {tool : this.value},
 										success : function (param) {
                                             $("#modelSubmit").attr("disabled", false);
@@ -2457,7 +2457,13 @@ var Designer = {
                             });
                             //加载之前填的数据
                             if (a.textBlock[0].text){
-                                $("#bodyUp :input[value='"+a.textBlock[0].text+"']").attr("checked","checked").unbind("click").bind("click",function () {
+                            	var checkName;
+                            	if($("#bodyUp :input[value='"+a.textBlock[0].text+"']").length == 0){
+                            		checkName = a.textBlock[0].text.substring(0,a.textBlock[0].text.length-1);
+								}else {
+                            		checkName = a.textBlock[0].text;
+								}
+                                $("#bodyUp :input[value='"+checkName+"']").attr("checked","checked").unbind("click").bind("click",function () {
                                     $("#modelSubmit").attr("disabled", false);
                                 	loadParam()
                                 });
@@ -2521,8 +2527,8 @@ var Designer = {
                                 }
                             }
                         }
-                        s.text = i[0];
 					}
+                    s.text = i[0];
                     i.splice(0,1);
                     s.labels = i.slice(0,i.length/2);
                     i.splice(0,i.length/2);

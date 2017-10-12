@@ -593,7 +593,7 @@ var Designer = {
 							Designer.op.removeShape();
 							j.preventDefault()
 						} else {
-							if ((j.ctrlKey || j.metaKey) && j.keyCode == 90) {
+							/*if ((j.ctrlKey || j.metaKey) && j.keyCode == 90) {
 								MessageSource.undo();
 								j.preventDefault()
 							} else {
@@ -620,7 +620,7 @@ var Designer = {
 													if ((j.ctrlKey || j.metaKey) && j.shiftKey && j.keyCode == 66) {
 														Designer.clipboard.brush();
 														j.preventDefault()
-													} else {
+													} else {*/
 														if ((j.altKey || j.metaKey) && (j.keyCode == 187 || j.keyCode == 107)) {
 															Designer.zoomIn();
 															j.preventDefault()
@@ -823,13 +823,13 @@ var Designer = {
 													}
 												}
 											}
-										}
+										/*}
 									}
 								}
 							}
 						}
 					}
-				}
+				}*/
 			});
 			$("input,textarea,select").off().on("keydown.hotkey", function(b) {
 				b.stopPropagation()
@@ -2513,6 +2513,7 @@ var Designer = {
 
                     //检查是否有重名
 					if(s.text === ''){
+
                         for (var ii=Model.orderList.length-1;ii>=0;ii--) {
                             var order = Model.orderList[ii];
                             var currentEle = Model.define.elements[order.id];

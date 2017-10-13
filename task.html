@@ -162,6 +162,14 @@
 <script type="text/javascript">
 
     $(function () {
+
+        //还原任务图
+        var taskConfig = window.sessionStorage.getItem("nodeJson");
+        window.sessionStorage.removeItem("nodeJson");
+        console.log(taskConfig);
+        if(taskConfig !== null){
+            Designer.open(taskConfig);
+        }
         //模态框隐藏
         $('#myModal').on('hidden.bs.modal', function () {
             var mm = $("#shape_text_edit");
@@ -199,14 +207,15 @@
     //提交数据
     function submitData() {
         $('#submitModal').modal('hide');
-        var nodeJson = getJson();
+        var trsJson = getJson();
         var trsContent = $('#trsText').val();
         var taskName = $('#taskName').val();
         var taskRemark = $('#taskRemark').val();
+        var nodeJson = JSON.stringify(Model.define);
         $.ajax({
             type: "post",
             url: CONF.ipport + "/eTLTaskManager/submitData",
-            data: {trsData: trsContent, trsJson: nodeJson, taskName: taskName, taskRemark: taskRemark},
+            data: {trsData: trsContent, trsJson: trsJson, taskName: taskName, taskRemark: taskRemark, nodeJson: nodeJson},
             success: function (data) {
                 alert(data);
             },

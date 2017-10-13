@@ -53,7 +53,7 @@
                     <td data-ng-bind="el.nodeName"></td>
                     <td data-ng-bind="el.createtime"></td>
                     <td data-ng-bind="el.remark"></td>
-                    <td><button class="btn btn-link" data-ng-click="">修改</button></td>
+                    <td><button class="btn btn-link" data-ng-click="showPic(el.nodeJson)">修改</button></td>
                 </tr>
                 </tbody>
             </table>
@@ -90,9 +90,6 @@
                     'remark':$scope.remarkk
                 }
             }).then(function(data) {
-
-
-
                 $scope.nowPage = nowPage;
                 $scope.lastPage = data.data.totalPages;
                 var tasklist = data.data.content;
@@ -102,6 +99,10 @@
                 }
                 $scope.tasklist = tasklist;
             })
+        };
+        $scope.showPic = function (nodeJson) {
+            window.sessionStorage.setItem("nodeJson", nodeJson);
+            location.href="task.html";
         };
     })
 </script>

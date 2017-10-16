@@ -132,6 +132,7 @@
             <div class="modal-body">
 
                 <form class="form-horizontal">
+                    <input type="hidden" id="id">
                     <div class="form-group">
                         <label for="taskName" class="col-sm-2 control-label">任务名称:</label>
                         <div class="col-sm-10" style="padding-left: 0">
@@ -163,13 +164,19 @@
 
     $(function () {
 
-        //还原任务图
-        var taskConfig = window.sessionStorage.getItem("nodeJson");
-        window.sessionStorage.removeItem("nodeJson");
-        console.log(taskConfig);
-        if(taskConfig !== null){
-            Designer.open(taskConfig);
+        //还原任务图及修改信息
+        var id = window.sessionStorage.getItem("id");
+        if(id !== null){
+            $('#id').val(id);
+            $('#taskName').val(window.sessionStorage.getItem("nodeName"));
+            $('#taskRemark').val(window.sessionStorage.getItem("remark"));
+            Designer.open(window.sessionStorage.getItem("nodeJson"));
+            window.sessionStorage.removeItem("id");
+            window.sessionStorage.removeItem("nodeJson");
+            window.sessionStorage.removeItem("nodeName");
+            window.sessionStorage.removeItem("remark");
         }
+
         //模态框隐藏
         $('#myModal').on('hidden.bs.modal', function () {
             var mm = $("#shape_text_edit");
@@ -209,13 +216,14 @@
         $('#submitModal').modal('hide');
         var trsJson = getJson();
         var trsContent = $('#trsText').val();
+        var id = $('#id').val();
         var taskName = $('#taskName').val();
         var taskRemark = $('#taskRemark').val();
         var nodeJson = JSON.stringify(Model.define);
         $.ajax({
             type: "post",
             url: CONF.ipport + "/eTLTaskManager/submitData",
-            data: {trsData: trsContent, trsJson: trsJson, taskName: taskName, taskRemark: taskRemark, nodeJson: nodeJson},
+            data: {trsData: trsContent, trsJson: trsJson, taskName: taskName, taskRemark: taskRemark, nodeJson: nodeJson, id: id},
             success: function (data) {
                 alert(data);
             },

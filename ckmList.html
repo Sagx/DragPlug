@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html data-ng-app="ckmApp" data-ng-controller="ckmCtrl" data-ng-init="getTask(1)" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CKM服务器列表</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/param.js"></script>
+</head>
+<body>
+
+<div class="container-fluid">
+
+    <div class="raw" style="margin: 15px 0">
+        <form class="form-inline">
+            <div class="col-md-3" style="padding: 0;width: 21%">
+                <div class="form-group">
+                    <label for="ckmName">ckm名称：</label>
+                    <input class="form-control" data-ng-model="ckmNamee" id="ckmName" placeholder="name">
+                </div>
+            </div>
+            <div class="col-md-3" style="padding: 0;width: 20%">
+                <div class="form-group">
+                    <label for="url">ip/port：</label>
+                    <input class="form-control" data-ng-model="urll" id="url" placeholder="ip/port">
+                </div>
+            </div>
+            <div class="col-md-1" style="padding: 0">
+                <button class="btn btn-default" data-ng-click="getTask(1)">查询</button>
+            </div>
+            <div class="col-md-5" style="padding: 0"></div>
+            <div class="col-md-1" style="padding: 0">
+                <button class="btn btn-info" data-ng-click="showAddModel()">新增CKM</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12" style="margin: 10px 0">
+            <table class="table table-hover table-bordered">
+                <thead>
+                <tr class="warning">
+                    <td class="active">序号</td>
+                    <td class="active">服务器ID</td>
+                    <td class="active">ckm名称</td>
+                    <td class="active">ip/port</td>
+                    <td class="active">操作</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="el in ckmlist">
+                    <td data-ng-bind="($index+1)+5*({{nowPage-1}})"></td>
+                    <td data-ng-bind="el.id"></td>
+                    <td data-ng-bind="el.nodename"></td>
+                    <td data-ng-bind="el.url"></td>
+                    <td><button class="btn btn-link" data-ng-click="edit(el.id,el.nodename,el.url)">修改</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <nav>
+            <ul class="pager" style="margin: 0">
+                <li><a href="#" data-ng-click="getTask(1)">首页</a></li>
+                <li><a href="#" data-ng-click="getTask(nowPage-1)">上一页</a></li>
+                <li><a href="#" data-ng-click="getTask(nowPage+1)">下一页</a></li>
+                <li><a href="#" data-ng-click="getTask(lastPage)">末页</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!--新增/修改ckm模态框-->
+    <div class="modal fade" id="AddModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        新增/修改CKM
+                    </h4>
+                </div>
+                <div class="modal-body">
+
+                    <form class="form-horizontal">
+                        <input type="hidden" data-ng-model="idd" id="id">
+                        <div class="form-group">
+                            <label for="ckm" class="col-sm-2 control-label">CKM名称:</label>
+                            <div class="col-sm-10" style="padding-left: 0">
+                                <input class="form-control" data-ng-model="ckm" id="ckm" placeholder="name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ipport" class="col-sm-2 control-label">ip/port:</label>
+                            <div class="col-sm-10" style="padding-left: 0">
+                                <input class="form-control" data-ng-model="ipportt" id="ipport" placeholder="示例 127.0.0.1:8080">
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" data-ng-click="submitData()">
+                        提交
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript">
+    var navApp=angular.module("ckmApp",[]);
+    navApp.controller("ckmCtrl",function($scope,$http){
+        $scope.nowPage = 1;
+        $scope.getTask= function (nowPage) {
+            $http({
+                url : CONF.ipport + '/eTLCkmManager/getCkmList',
+                method : 'get',
+                params : {
+                    'pageNum':nowPage,
+                    'ckmName':$scope.ckmNamee,
+                    'url':$scope.urll
+                }
+            }).then(function(data) {
+                $scope.nowPage = nowPage;
+                $scope.lastPage = data.data.totalPages;
+                $scope.ckmlist = data.data.content;
+            })
+        };
+        $scope.showAddModel = function () {
+            $scope.idd = null;
+            $scope.ckm = null;
+            $scope.ipportt = null;
+            $('#AddModel').modal('show');
+        };
+        $scope.edit = function (id,ckmname,url) {
+            $scope.idd = id;
+            $scope.ckm = ckmname;
+            $scope.ipportt = url;
+            $('#AddModel').modal('show');
+        };
+        $scope.submitData = function () {
+            $('#AddModel').modal('hide');
+            $http({
+                url : CONF.ipport + '/eTLCkmManager/save',
+                method : 'get',
+                params : {
+                    'id':$scope.idd,
+                    'ckmName':$scope.ckm,
+                    'url':$scope.ipportt
+                }
+            }).then(function(data) {
+                console.log(data);
+                alert(data.data);
+            })
+        };
+    })
+</script>
+</html>

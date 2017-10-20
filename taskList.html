@@ -13,7 +13,7 @@
 
 <div class="container-fluid">
 
-    <div class="raw" style="margin: 15px 0">
+    <div class="row" style="margin: 15px 0">
         <form class="form-inline">
             <div class="col-md-3" style="padding: 0;width: 20%">
                 <div class="form-group">
@@ -27,8 +27,12 @@
                     <input class="form-control" data-ng-model="remarkk" id="remark" placeholder="remark">
                 </div>
             </div>
-            <div class="col-md-2" style="padding: 0">
+            <div class="col-md-3" style="padding: 0">
                 <button class="btn btn-default" data-ng-click="getTask(1)">查询</button>
+            </div>
+            <div class="col-md-2" style="padding: 0"></div>
+            <div class="col-md-1" style="padding: 0">
+                <button class="btn btn-info" onclick="javascript:location='task.html'">新增任务</button>
             </div>
         </form>
     </div>

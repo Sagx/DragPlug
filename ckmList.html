@@ -7,7 +7,6 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/angular.min.js"></script>
-    <script src="js/param.js"></script>
 </head>
 <body>
 
@@ -124,7 +123,7 @@
         $scope.nowPage = 1;
         $scope.getTask= function (nowPage) {
             $http({
-                url : CONF.ipport + '/eTLCkmManager/getCkmList',
+                url : parent.CONF.ipport + '/eTLCkmManager/getCkmList',
                 method : 'get',
                 params : {
                     'pageNum':nowPage,
@@ -142,6 +141,7 @@
             $scope.ckm = null;
             $scope.ipportt = null;
             $('#AddModel').modal('show');
+            parent.controlModel(1);
         };
         $scope.edit = function (id,ckmname,url) {
             $scope.idd = id;
@@ -152,7 +152,7 @@
         $scope.submitData = function () {
             $('#AddModel').modal('hide');
             $http({
-                url : CONF.ipport + '/eTLCkmManager/save',
+                url : parent.CONF.ipport + '/eTLCkmManager/save',
                 method : 'get',
                 params : {
                     'id':$scope.idd,
@@ -165,5 +165,10 @@
             })
         };
     })
+</script>
+<script type="text/javascript">
+    $('#AddModel').on('hidden.bs.modal', function () {
+        parent.controlModel(0);
+    });
 </script>
 </html>

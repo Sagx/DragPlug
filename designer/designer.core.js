@@ -2395,9 +2395,9 @@ var Designer = {
 				if($(this).val() === ''){
                     var url;
                     if(a.name === 'round'){
-                        url = CONF.ipport + '/eTLTaskManager/findSources';
+                        url = parent.CONF.ipport + '/eTLTaskManager/findSources';
                     }else if(a.name === 'rectangle'){
-                        url = CONF.ipport + '/eTLTaskManager/findInterceptions';
+                        url = parent.CONF.ipport + '/eTLTaskManager/findInterceptions';
                     }
 
                     $.ajax({
@@ -2431,7 +2431,7 @@ var Designer = {
                                 $(this).click(function(){
                                 	$.ajax({
                                         type : "get",
-                                        url : CONF.ipport + "/eTLTaskManager/findArgs",
+                                        url : parent.CONF.ipport + "/eTLTaskManager/findArgs",
 										data : {tool : this.value},
 										success : function (param) {
                                             $("#modelSubmit").attr("disabled", false);
@@ -2470,6 +2470,7 @@ var Designer = {
                                 loadParam()
                             }
                             $('#myModal').modal('show');
+                            parent.controlModel(1);
                         },
 					error : function () {
 						alert("节点属性加载失败");

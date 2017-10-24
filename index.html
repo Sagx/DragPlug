@@ -17,7 +17,7 @@
 
   <!--导航栏-->
   <nav class="navbar navbar-default" style="margin-bottom: 0">
-	  <div class="container-fluid">
+	  <div class="container-fluid" id="nav">
 		  <div class="navbar-header">
 			  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 				  <span class="sr-only">Toggle navigation</span>
@@ -30,6 +30,14 @@
 
 		  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			  <ul class="nav navbar-nav">
+				  <li class="dropdown">
+					  <a href="#" id="showInfo" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span id="ipportspan">ip-port</span> <span class="caret"></span></a>
+					  <ul class="dropdown-menu">
+						  <li><a class="ipport" href="#">192.168.50.139:4191</a></li>
+						  <li><a class="ipport" href="#">192.168.50.148</a></li>
+						  <li><a class="ipport" href="#">192.168.50.150</a></li>
+					  </ul>
+				  </li>
 				  <li><a href="taskList.html" target="right">任务列表</a></li>
 				  <li><a href="ckmList.html" target="right">CKM列表</a></li>
 			  </ul>
@@ -40,11 +48,29 @@
 	  </div>
   </nav>
 
+<div id="shade"></div>
+
   <!--内嵌页面-->
   <iframe name="right" src="taskList.html" frameborder="false" scrolling="auto" style="border:none;" width="100%" height="590" allowtransparency="true"></iframe>
-
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/param.js"></script>
+  <script type="text/javascript">
+      $(function () {
+          $('.ipport').click(function () {
+              $('#ipportspan').text(this.text);
+              CONF.ipport = "http://"+this.text;
+          });
+      });
+
+      function controlModel(flag) {
+          if(flag==0){
+              $('#shade').attr("style","");
+		  }else if(flag==1){
+              $('#shade').attr("style","background-color: #000;height: 52px;width: 100%;opacity:0.5;position: fixed;left: 0;top: 0;");
+		  }
+      }
+  </script>
+
   </body>
 </html>

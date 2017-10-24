@@ -7,7 +7,6 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/angular.min.js"></script>
-    <script src="js/param.js"></script>
 </head>
 <body>
 
@@ -84,7 +83,7 @@
         $scope.nowPage = 1;
         $scope.getTask= function (nowPage) {
             $http({
-                url : CONF.ipport + '/eTLTaskManager/getTaskList',
+                url : parent.CONF.ipport + '/eTLTaskManager/getTaskList',
                 method : 'get',
                 params : {
                     'pageNum':nowPage,
